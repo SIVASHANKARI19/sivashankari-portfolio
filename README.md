@@ -1,24 +1,26 @@
-React Portfolio 🚀
+🚀 React Portfolio
 
-Single-page developer portfolio built with React + Three.js + Tailwind CSS, featuring a full-screen animated starfield background and smooth anchor-based section navigation.
+![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-r128-000000?logo=three.js&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white)
 
-Features
+Modern single-page portfolio with animated Three.js starfield background and smooth anchor-based navigation.
 
-⚡ Full-screen Three.js star background (StarBackground.jsx)
+## ✨ Features
 
-🎯 Smooth scroll to sections using IDs (#about, #work, etc.)
+- 🌌 **Animated Star Background** - Full-screen Three.js particle system
+- 🎯 **Smooth Navigation** - Anchor-based section scrolling
+- 🧩 **Modular Components** - Hero, About, Experience, Tech, Works, Contact
+- 🎨 **Tailwind Styling** - Responsive, modern UI
+- ⚡ **Optimized Performance** - Lightweight rendering with requestAnimationFrame
 
-🧩 Modular components (Hero, About, Experience, Tech, Works, Contact)
-
-🎨 Tailwind CSS styling
-
-🔥 Fast dev with Vite
-
-Structure
+## 📂 Structure
+```
 src/
  ├── components/
+ │    ├── StarBackground.jsx   # Three.js animated stars
  │    ├── Navbar.jsx
- │    ├── StarBackground.jsx
  │    ├── Hero.jsx
  │    ├── About.jsx
  │    ├── Experience.jsx
@@ -27,10 +29,31 @@ src/
  │    └── Contact.jsx
  ├── App.jsx
  └── main.jsx
+```
 
-Run
+## 🚀 Quick Start
+```bash
+# Install dependencies
 npm install
+
+# Run development server
 npm run dev
 
-Build
+# Build for production
 npm run build
+```
+
+## 🛠️ Tech Stack
+
+- **React** - UI library
+- **Three.js** - 3D graphics
+- **Tailwind CSS** - Styling
+- **Vite** - Build tool
+
+## 📝 License
+
+MIT
+
+---
+
+⭐ Star this repo if you found it helpful!
