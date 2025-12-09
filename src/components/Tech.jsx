@@ -1,11 +1,8 @@
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion";
-import * as THREE from "three";
 import { StarBackground } from "./StarBackground";
 import { styles } from "../style";
 import { technologies } from "../constants";
-import {RotatingCard,TechCanvas, TechCard} from "../utils/function";
+import { TechCard} from "../utils/function";
 
 
 // Main Tech Component

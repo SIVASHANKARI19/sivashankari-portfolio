@@ -1,7 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import * as THREE from "three";
+
+
 
 export const RotatingCard = ({ texture, isHovered }) => {
   const meshRef = useRef();
@@ -227,3 +229,87 @@ export const TechCard = ({ technology, index }) => {
     </motion.div>
   );
 };
+
+export const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      setShowLeftArrow(container.scrollLeft > 0);
+      setShowRightArrow(
+        container.scrollLeft <
+          container.scrollWidth - container.clientWidth - 10
+      );
+    }
+  };
+
+ export const scroll = (direction) => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const scrollAmount = 420; 
+      container.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  export const AnimatedInput = ({ label, type, name, value, onChange, required, isTextarea = false }) => {
+    const [isFocused, setIsFocused] = useState(false);
+    const [hasValue, setHasValue] = useState(false);
+  
+    useEffect(() => {
+      setHasValue(value.length > 0);
+    }, [value]);
+  
+    const InputComponent = isTextarea ? motion.textarea : motion.input;
+  
+    return (
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative group"
+      >
+        <motion.div
+          className="absolute -inset-1 bg-gradient-to-r from-purple-600  rounded-xl opacity-0 blur group-hover:opacity-50 transition-opacity"
+          animate={isFocused ? { opacity: 0.7 } : {}}
+        />
+  
+        <div className="relative">
+          <InputComponent
+            type={type}
+            name={name}
+            value={value}
+            onChange={onChange}
+            required={required}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className={`w-full bg-black/50 backdrop-blur-sm border-2 rounded-xl px-6 py-4 text-white placeholder-transparent focus:outline-none transition-all ${
+              isFocused ? 'border-[#915eff] shadow-lg shadow-purple-500/50' : 'border-purple-900/50'
+            } ${isTextarea ? 'min-h-[150px] resize-none' : ''}`}
+            placeholder={label}
+            rows={isTextarea ? 6 : undefined}
+            whileFocus={{ scale: 1.02 }}
+          />
+          
+          <motion.label
+            animate={{
+              y: isFocused || hasValue ? -40 : 0,
+              scale: isFocused || hasValue ? 0.85 : 1,
+              color: isFocused ? '#915eff' : '#9ca3af',
+            }}
+            className="absolute left-6 top-4 pointer-events-none font-medium"
+          >
+            {label}
+          </motion.label>
+  
+          <motion.div
+            className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-purple-500 "
+            initial={{ width: '0%' }}
+            animate={{ width: isFocused ? '100%' : '0%' }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      </motion.div>
+    );
+  };
+  

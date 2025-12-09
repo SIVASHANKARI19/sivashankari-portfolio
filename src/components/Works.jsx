@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { StarBackground } from "../components/StarBackground.jsx";
 import { projects } from "../constants";
+import {handleScroll,scroll} from '../utils/function';
 
 const styles = {
   sectionHeadText: "text-5xl md:text-6xl font-black",
@@ -12,28 +13,6 @@ const Works = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
   const scrollContainerRef = useRef(null);
-
-  const handleScroll = () => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      setShowLeftArrow(container.scrollLeft > 0);
-      setShowRightArrow(
-        container.scrollLeft <
-          container.scrollWidth - container.clientWidth - 10
-      );
-    }
-  };
-
-  const scroll = (direction) => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      const scrollAmount = 420; 
-      container.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   return (
     <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center px-6 py-16">
@@ -50,9 +29,6 @@ const Works = () => {
           >
             My Work
           </h2>
-          <p className={`${styles.sectionSubText} text-gray-400 mb-6`}>
-            Real-world projects that make an impact
-          </p>
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#915eff] to-transparent mx-auto" />
         </div>
         <div className="relative">
