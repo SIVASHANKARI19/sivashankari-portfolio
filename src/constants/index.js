@@ -25,6 +25,7 @@ import {
   threejs,
 } from "../assets";
 import profile from '../../public/profile.jpg';
+import { Code, Rocket } from "@mui/icons-material";
 
 export const navLinks = [
   {
@@ -94,10 +95,6 @@ const technologies = [
     icon: nodejs,
   },
   {
-    name: "MongoDB",
-    icon: mongodb,
-  },
-  {
     name: "Three JS",
     icon: threejs,
   },
@@ -109,15 +106,12 @@ const technologies = [
     name: "figma",
     icon: figma,
   },
-  {
-    name: "docker",
-    icon: docker,
-  },
+ 
 ];
 
 // constants/index.js
 
-export const aboutContent = {
+ const aboutContent = {
   title: "About Me",
 
   description: [
@@ -127,13 +121,38 @@ export const aboutContent = {
   ],
 
   stats: [
-    { number: "3+", label: "Years Experience" },
-    { number: "15+", label: "Projects" },
-    { number: "100%", label: "Dedication" },
+    { number: "1+", label: "Years Experience" },
+    { number: "3+", label: "Projects" },
+    { number: "10k+", label: "Lines of Code" },
   ],
 
   profileImage:profile
 };
 
 
-export { services, technologies, aboutContent };
+ const experienceTimeline = [
+  {
+    title: "Full-Stack Development Workshop — Crayon'd, Chennai",
+    period: "2022 – 2023",
+    description: [
+      "Gained hands-on experience in React.js, Next.js, and Git workflows.",
+      "Built scalable applications following industry development patterns.",
+      "Collaborated on real-time product features improving teamwork.",
+    ],
+    skills: ["React", "Next.js", "Git"],
+    icon: Code,
+  },
+  {
+    title: "Student Special Group (SSG) Member",
+    period: "2023 – 2027",
+    description: [
+      "Built the S7 Project — an event management platform for students & admins.",
+      "Developed a real-time code editor for HTML/CSS/JS using React.",
+      "Worked on UI components, logic handling, and deployment tasks.",
+    ],
+    skills: ["React", "Frontend Dev", "Project Development"],
+    icon: Rocket,
+  },
+];
+
+export { services, technologies, aboutContent , experienceTimeline };

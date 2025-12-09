@@ -238,88 +238,150 @@
   animation: rotateGlow 6s linear infinite;
 }
 
-@keyframes rotateGlow {
-  0% {
-    transform: rotate(0deg);
-    box-shadow: 0 0 20px rgba(145, 94, 255, 0.6);
+/* ----------------------------- */
+/* ✨ ENTRY ANIMATIONS */
+/* ----------------------------- */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ----------------------------- */
+/* ✨ SPIN / PULSE RINGS */
+/* ----------------------------- */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.9; }
+  50%  { transform: scale(1.02); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+/* ----------------------------- */
+/* ✨ ORBITING PARTICLES */
+/* ----------------------------- */
+@keyframes orbit {
+  0% { transform: rotate(0deg) translate(140px) rotate(0deg); }
+  100% { transform: rotate(360deg) translate(140px) rotate(-360deg); }
+}
+
+/* ----------------------------- */
+/* ✨ STAT POP (used on stat cards) */
+/* ----------------------------- */
+@keyframes statPop {
+  from { transform: scale(0.96); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ----------------------------- */
+/* ✨ OPTIONAL UTILITY CLASSES */
+/* ----------------------------- */
+
+/* Add these if you want classes instead of inline animations */
+.fade-in-down { animation: fadeInDown 0.9s ease-out both; }
+.slide-in-left { animation: slideInLeft 0.9s ease-out both; }
+.slide-in-right { animation: slideInRight 0.9s ease-out both; }
+.scale-in { animation: scaleIn 0.6s ease-out both; }
+
+.spin-slow { animation: spin 28s linear infinite; }
+.pulse-soft { animation: pulse-ring 3s ease-in-out infinite; }
+
+.orbit { animation: orbit 3.6s linear infinite; }
+
+/* -------------------------------------------- */
+/* ✨ Floating Orb Animation */
+/* -------------------------------------------- */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
   }
   50% {
-    box-shadow: 0 0 35px rgba(145, 94, 255, 0.9);
-  }
-  100% {
-    transform: rotate(360deg);
+    transform: translateY(-30px) translateX(20px);
   }
 }
-  @keyframes float {
-          0%, 100% { transform: translateY(0) translateX(0); }
-          50% { transform: translateY(-20px) translateX(10px); }
-        }
-        
-        @keyframes fadeInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-          0%, 100% { 
-            transform: scale(1);
-            opacity: 0.5;
-          }
-          50% { 
-            transform: scale(1.05);
-            opacity: 0.8;
-          }
-        }
-        
-        @keyframes orbit {
-          from {
-            transform: rotate(0deg) translateX(140px) rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg) translateX(140px) rotate(-360deg);
-          }
-        }
-        
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.8);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
+
+/* -------------------------------------------- */
+/* ✨ Section Heading Fade Down */
+/* -------------------------------------------- */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------------------- */
+/* ✨ Card Slide Up Animation */
+/* -------------------------------------------- */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------------------- */
+/* ✨ List Item Slide In Right */
+/* -------------------------------------------- */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* -------------------------------------------- */
+/* ✨ Scale In Animation */
+/* -------------------------------------------- */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* -------------------------------------------- */
+/* ✨ Orbit Particles Around Icon */
+/* -------------------------------------------- */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(50px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(50px) rotate(-360deg);
+  }
+}

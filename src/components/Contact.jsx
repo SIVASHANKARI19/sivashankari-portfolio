@@ -1,9 +1,390 @@
-import React from 'react'
+import React, { useRef, useState, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import * as THREE from "three";
+import emailjs from "@emailjs/browser";
+import { styles } from "../style";
 
-const Contact = () => {
+// 3D Floating Sphere with Particles
+const FloatingSphere = ({ mousePosition }) => {
+  const sphereRef = useRef();
+  const particlesRef = useRef();
+
+  useFrame((state) => {
+    if (sphereRef.current) {
+      sphereRef.current.rotation.x = state.clock.elapsedTime * 0.2;
+      sphereRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+      
+      sphereRef.current.position.x = THREE.MathUtils.lerp(
+        sphereRef.current.position.x,
+        (mousePosition.x / window.innerWidth - 0.5) * 2,
+        0.05
+      );
+      sphereRef.current.position.y = THREE.MathUtils.lerp(
+        sphereRef.current.position.y,
+        -(mousePosition.y / window.innerHeight - 0.5) * 2,
+        0.05
+      );
+    }
+
+    if (particlesRef.current) {
+      particlesRef.current.rotation.y += 0.001;
+    }
+  });
+
+  const particleCount = 1000;
+  const positions = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.random() * Math.PI;
+    const radius = 3 + Math.random() * 2;
+    
+    positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+    positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+    positions[i * 3 + 2] = radius * Math.cos(phi);
+  }
+
   return (
-    <div>Contact</div>
-  )
-}
+    <group>
+      <ambientLight intensity={0.3} />
+      <pointLight position={[10, 10, 10]} intensity={1} color="#915eff" />
+      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#915eff" />
 
-export default Contact
+      <mesh ref={sphereRef}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial
+          color="#915eff"
+          emissive="#915eff"
+          emissiveIntensity={0.5}
+          metalness={0.9}
+          roughness={0.1}
+          wireframe
+        />
+      </mesh>
+
+      <points ref={particlesRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            count={particleCount}
+            array={positions}
+            itemSize={3}
+          />
+        </bufferGeometry>
+        <pointsMaterial
+          size={0.02}
+          color="#915eff"
+          transparent
+          opacity={0.6}
+          blending={THREE.AdditiveBlending}
+        />
+      </points>
+    </group>
+  );
+};
+
+// 3D Background Canvas
+const BackgroundCanvas = ({ mousePosition }) => {
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 75 }}
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance"
+        }}
+      >
+        <FloatingSphere mousePosition={mousePosition} />
+      </Canvas>
+    </div>
+  );
+};
+
+// Animated Input Field
+const AnimatedInput = ({ label, type, name, value, onChange, required, isTextarea = false }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
+
+  useEffect(() => {
+    setHasValue(value.length > 0);
+  }, [value]);
+
+  const InputComponent = isTextarea ? motion.textarea : motion.input;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative group"
+    >
+      <motion.div
+        className="absolute -inset-1 bg-gradient-to-r from-purple-600  rounded-xl opacity-0 blur group-hover:opacity-50 transition-opacity"
+        animate={isFocused ? { opacity: 0.7 } : {}}
+      />
+
+      <div className="relative">
+        <InputComponent
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className={`w-full bg-black/50 backdrop-blur-sm border-2 rounded-xl px-6 py-4 text-white placeholder-transparent focus:outline-none transition-all ${
+            isFocused ? 'border-[#915eff] shadow-lg shadow-purple-500/50' : 'border-purple-900/50'
+          } ${isTextarea ? 'min-h-[150px] resize-none' : ''}`}
+          placeholder={label}
+          rows={isTextarea ? 6 : undefined}
+          whileFocus={{ scale: 1.02 }}
+        />
+        
+        <motion.label
+          animate={{
+            y: isFocused || hasValue ? -40 : 0,
+            scale: isFocused || hasValue ? 0.85 : 1,
+            color: isFocused ? '#915eff' : '#9ca3af',
+          }}
+          className="absolute left-6 top-4 pointer-events-none font-medium"
+        >
+          {label}
+        </motion.label>
+
+        <motion.div
+          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-purple-500 "
+          initial={{ width: '0%' }}
+          animate={{ width: isFocused ? '100%' : '0%' }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+// Contact Component
+const Contact = () => {
+  const formRef = useRef();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // EmailJS configuration - Replace with your credentials
+    emailjs
+      .send(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        {
+          from_name: form.name,
+          to_name: "Your Name",
+          from_email: form.email,
+          to_email: "sivashankari19115@gmail.com",
+          message: form.message,
+        },
+        "YOUR_PUBLIC_KEY"
+      )
+      .then(
+        () => {
+          setLoading(false);
+          setSuccess(true);
+          setForm({ name: "", email: "", message: "" });
+          
+          setTimeout(() => setSuccess(false), 5000);
+        },
+        (error) => {
+          setLoading(false);
+          console.error(error);
+          alert("Something went wrong. Please try again.");
+        }
+      );
+  };
+
+ 
+  return (
+    <div className="relative w-full min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black">
+
+      {/* ------------------ HEADING ------------------ */}
+      <div className="text-center pt-24" style={{ animation: "fadeInDown 1s ease-out" }}>
+        <h2 className={`${styles.sectionHeadText} font-semibold mb-4 text-[#915eff]`}>
+          Contact
+        </h2>
+        <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#915eff] to-transparent mx-auto mb-16" />
+      </div>
+
+      {/* Background Grid */}
+      <BackgroundCanvas mousePosition={mousePosition} />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(145,94,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(145,94,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+
+      {/* ------------------ MOUSE FOLLOW CIRCLES ------------------ */}
+      <motion.div
+        className="fixed w-4 h-4 bg-[#915eff] rounded-full pointer-events-none z-50 mix-blend-screen"
+        style={{
+          x: smoothMouseX,
+          y: smoothMouseY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+      <motion.div
+        className="fixed w-8 h-8 border-2 border-[#915eff] rounded-full pointer-events-none z-50"
+        style={{
+          x: smoothMouseX,
+          y: smoothMouseY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+
+      {/* ------------------ MAIN GRID ------------------ */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pb-32 grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+        {/* LEFT SIDE - CONTACT INFO */}
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="space-y-8"
+        >
+          <div className="space-y-4">
+            {[
+              { icon: "📧", label: "Email", value: "your-email@example.com" },
+              { icon: "📱", label: "Phone", value: "+1 (555) 123-4567" },
+              { icon: "📍", label: "Location", value: "Chennai, Tamil Nadu, IN" },
+            ].map((item, index) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 + index * 0.1 }}
+                whileHover={{ x: 10, scale: 1.02 }}
+                className="flex items-center gap-4 bg-black/30 backdrop-blur-sm border border-[#915eff]/30 rounded-xl p-4 hover:border-[#915eff]/50 transition-all"
+              >
+                <span className="text-4xl">{item.icon}</span>
+                <div>
+                  <p className="text-gray-500 text-sm">{item.label}</p>
+                  <p className="text-white font-medium">{item.value}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* RIGHT SIDE - FORM */}
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          <motion.div
+            className="absolute -inset-4 bg-gradient-to-r from-[#915eff] rounded-3xl opacity-20 blur-2xl"
+            animate={{
+              opacity: [0.2, 0.3, 0.2],
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+
+          <div className="relative bg-black/40 backdrop-blur-xl border border-[#915eff]/40 rounded-3xl p-8 shadow-2xl">
+            <div className="space-y-6">
+
+              <AnimatedInput label="Your Name" type="text" name="name" value={form.name} onChange={handleChange} required />
+
+              <AnimatedInput label="Your Email" type="email" name="email" value={form.email} onChange={handleChange} required />
+
+              <AnimatedInput label="Your Message" name="message" value={form.message} onChange={handleChange} required isTextarea />
+
+              <motion.button
+                onClick={handleSubmit}
+                disabled={loading}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full bg-gradient-to-r from-purple-600 text-white font-bold py-4 rounded-xl relative overflow-hidden group disabled:opacity-50"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{ x: ["-100%", "100%"] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+
+                <span className="relative z-10">
+                  {loading ? "Sending..." : "Send Message"}
+                </span>
+              </motion.button>
+            </div>
+
+            {success && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                className="mt-6 bg-green-500/20 border border-green-500 rounded-xl p-4 text-center"
+              >
+                <p className="text-green-400 font-semibold">Message sent successfully!</p>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* FLOATING PARTICLES */}
+      {[...Array(40)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-purple-400 rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -100, 0],
+            opacity: [0, 1, 0],
+            scale: [0, 1, 0],
+          }}
+          transition={{
+            duration: 4 + Math.random() * 3,
+            repeat: Infinity,
+            delay: Math.random() * 3,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default Contact;
