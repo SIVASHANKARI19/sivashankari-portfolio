@@ -1,6 +1,5 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { aboutContent } from "../constants";
-import { StarBackground } from "../components/StarBackground.jsx";
 
 const styles = {
   sectionHeadText: "text-5xl md:text-6xl font-black",
@@ -13,17 +12,15 @@ const About = () => {
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12; // smaller tilt
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 12;
     setMousePosition({ x, y });
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center mx-auto justify-center px-6 py-16">
-      <StarBackground />
-
+    <div className="relative w-full min-h-screen overflow-hidden flex items-center mx-auto justify-center px-6 py-16">
       <div className="relative max-w-6xl w-full">
-        {/* Title */}
+
         <div className="text-center mb-16" style={{ animation: "fadeInDown 0.9s ease-out both" }}>
           <h2 className={`${styles.sectionHeadText} font-semibold mb-4 text-[#915eff]`}>
             {aboutContent.title}
@@ -32,7 +29,7 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Profile Image  */}
+          {/* Profile Image */}
           <div
             className="flex justify-center relative"
             onMouseEnter={() => setIsHovered(true)}
@@ -71,7 +68,7 @@ const About = () => {
                 }}
               />
 
-              {/* Orbiting particles  */}
+              {/* Orbiting particles */}
               {isHovered &&
                 [0, 72, 144, 216, 288].map((angle, i) => (
                   <div
@@ -131,7 +128,6 @@ const About = () => {
                   className="text-center p-4 bg-[#915eff]/10 rounded-xl border border-[#915eff]/30 hover:bg-[#915eff]/20 hover:border-[#915eff]/60 transition-all duration-300 cursor-pointer"
                   style={{
                     animation: `scaleIn 0.5s ease-out ${i * 0.08}s both`,
-                    animationName: "scaleIn, statPop",
                   }}
                 >
                   <div className="text-3xl font-bold text-[#915eff] mb-1 group-hover:scale-110 transition-transform">

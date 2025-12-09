@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { StarBackground } from "../components/StarBackground.jsx";
 import { projects } from "../constants";
 
 const styles = {
@@ -12,32 +11,30 @@ const Works = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
   const scrollContainerRef = useRef(null);
-   const handleScroll = () => {
-      const container = scrollContainerRef.current;
-      if (container) {
-        setShowLeftArrow(container.scrollLeft > 0);
-        setShowRightArrow(
-          container.scrollLeft <
-            container.scrollWidth - container.clientWidth - 10
-        );
-      }
-    };
-  
-    const scroll = (direction) => {
-      const container = scrollContainerRef.current;
-      if (container) {
-        const scrollAmount = 420; 
-        container.scrollBy({
-          left: direction === "left" ? -scrollAmount : scrollAmount,
-          behavior: "smooth",
-        });
-      }
-    };
+
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      setShowLeftArrow(container.scrollLeft > 0);
+      setShowRightArrow(
+        container.scrollLeft < container.scrollWidth - container.clientWidth - 10
+      );
+    }
+  };
+
+  const scroll = (direction) => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const scrollAmount = 420;
+      container.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
-    <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center px-6 py-16">
-      <StarBackground />
-
+    <div className="relative w-full min-h-screen overflow-hidden flex items-center justify-center px-6 py-16">
       <div className="relative max-w-7xl w-full">
         {/* Title */}
         <div
@@ -51,7 +48,9 @@ const Works = () => {
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#915eff] to-transparent mx-auto" />
         </div>
+
         <div className="relative">
+          {/* Left Arrow */}
           {showLeftArrow && (
             <button
               onClick={() => scroll("left")}
@@ -173,9 +172,7 @@ const Works = () => {
                       </span>
                     </div>
 
-                    {/* Content */}
                     <div className="relative z-10">
-                      {/* Project Icon/Graphic */}
                       <div className="mb-6 relative w-16 h-16">
                         <div
                           className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#915eff]/30 to-[#915eff]/10 border border-[#915eff]/40"
@@ -193,7 +190,6 @@ const Works = () => {
                         </div>
                       </div>
 
-                      {/* Project Name */}
                       <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#915eff] transition-colors duration-300">
                         {project.name}
                       </h3>

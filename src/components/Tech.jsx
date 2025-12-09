@@ -7,8 +7,8 @@ import { TechCard} from "../utils/function";
 
 const Tech = () => {
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black flex flex-col items-center justify-center px-6 py-20 overflow-hidden">
-      <StarBackground />
+    <div className="relative w-full min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden">
+      {/* <StarBackground /> */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(145,94,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(145,94,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
  <div
         className="relative "

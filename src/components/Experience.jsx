@@ -1,7 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Star, Code, Rocket, Work } from "@mui/icons-material";
+import React, { useRef, useState } from "react";
+import { Star, Work } from "@mui/icons-material";
 import { experienceTimeline } from "../constants";
-import { StarBackground, FloatingOrb } from "../components/StarBackground.jsx";
 import { styles } from "../style";
 
 const Experience = () => {
@@ -9,16 +8,15 @@ const Experience = () => {
   const containerRef = useRef(null);
 
   return (
-    <section className="relative w-full min-h-screen bg-black flex flex-col items-center px-6 py-16 overflow-hidden">
-      <StarBackground />
+    <section className="relative w-full min-h-screen flex flex-col items-center px-6 py-16 overflow-hidden">
       <div
-        className="relative "
+        className="relative"
         style={{
           animation: "fadeInDown 1s ease-out",
         }}
       >
         <h2
-          className={`${styles.sectionHeadText} font-semibold  text-[#915eff]`}
+          className={`${styles.sectionHeadText} font-semibold text-[#915eff]`}
         >
           Experience
         </h2>
@@ -27,7 +25,7 @@ const Experience = () => {
 
       <div
         ref={containerRef}
-        className="flex flex-col gap-20 max-w-5xl w-full relative "
+        className="flex flex-col gap-20 max-w-5xl w-full relative"
       >
         {experienceTimeline.map((item, index) => {
           const Icon = item.icon;
@@ -98,6 +96,7 @@ const Experience = () => {
                     </>
                   )}
                 </div>
+
                 <div
                   className="flex-1 bg-gradient-to-br from-[#1e1e1e] to-[#0a0a0a] rounded-2xl p-8 relative overflow-hidden"
                   style={{
@@ -119,7 +118,7 @@ const Experience = () => {
                       pointerEvents: "none",
                     }}
                   />
-                  <div className="relative ">
+                  <div className="relative">
                     <div
                       style={{
                         transform: isHovered
@@ -162,6 +161,7 @@ const Experience = () => {
                         </li>
                       ))}
                     </ul>
+
                     <div className="flex flex-wrap gap-3">
                       {item.skills.map((skill, i) => (
                         <div
