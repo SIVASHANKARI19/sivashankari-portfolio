@@ -42,24 +42,7 @@ export const navLinks = [
   },
 ];
 
-const services = [
-  {
-    title: "Web Developer",
-    icon: web,
-  },
-  {
-    title: "React Native Developer",
-    icon: mobile,
-  },
-  {
-    title: "Backend Developer",
-    icon: backend,
-  },
-  {
-    title: "Content Creator",
-    icon: creator,
-  },
-];
+
 
 const technologies = [
   {
@@ -79,11 +62,15 @@ const technologies = [
     icon: typescript,
   },
   {
-    name: "React JS",
+    name: "React",
     icon: reactjs,
   },
   {
-    name: "Redux Toolkit",
+    name: "Next.js",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+  },
+  {
+    name: "Redux",
     icon: redux,
   },
   {
@@ -91,23 +78,27 @@ const technologies = [
     icon: tailwind,
   },
   {
-    name: "Node JS",
+    name: "Node.js",
     icon: nodejs,
   },
   {
-    name: "Three JS",
-    icon: threejs,
+    name: "Express.js",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
   },
   {
-    name: "git",
+    name: "MySQL",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+  },
+  {
+    name: "MongoDB",
+    icon: mongodb,
+  },
+  {
+    name: "Git",
     icon: git,
   },
-  {
-    name: "figma",
-    icon: figma,
-  },
- 
 ];
+
 
 // constants/index.js
 
@@ -153,6 +144,42 @@ const technologies = [
     skills: ["React", "Frontend Dev", "Project Development"],
     icon: Rocket,
   },
+  
+];
+const projects = [
+  {
+    id: 1,
+    name: "EMTAX",
+    description:
+      "EMTAX application helps manage employee tax details, filing, and calculations efficiently",
+    tags: ["Tax Management", "Employee Portal", "Finance"],
+    color: "#915eff",
+  },
+  {
+    id: 2,
+    name: "Revature/RevPro",
+    description:
+      "Revature/Accenture application supports candidate training, onboarding, skill evaluation, and placement",
+    tags: ["Training Platform", "HR Tech", "Assessment"],
+    color: "#915eff",
+  },
+  {
+    id: 3,
+    name: "Maayu",
+    description:
+      "Maayu application focuses on wellness tracking, personalized health guidance, and daily improvement",
+    tags: ["Health Tech", "Wellness", "Tracking"],
+    color: "#915eff",
+  },
+  {
+    id: 4,
+    name: "Real-Time Messaging App",
+    description:
+      "A full-stack real-time chat application built using Socket.io, featuring live messaging, typing indicators, chat rooms, and user presence tracking",
+    tags: ["Socket.io", "Real-Time Chat", "Node.js", "WebSockets"],
+    color: "#915eff",
+  },
 ];
 
-export { services, technologies, aboutContent , experienceTimeline };
+
+export {  technologies, aboutContent , experienceTimeline,projects };

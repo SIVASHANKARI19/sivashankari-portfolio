@@ -19,7 +19,7 @@ const About = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center mr-20 justify-center px-6 py-16">
+    <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center mx-auto justify-center px-6 py-16">
       <StarBackground />
 
       <div className="relative max-w-6xl w-full">

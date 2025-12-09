@@ -2,10 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { Star, Code, Rocket, Work } from "@mui/icons-material";
 import { experienceTimeline } from "../constants";
 import { StarBackground, FloatingOrb } from "../components/StarBackground.jsx";
+import {styles} from "../style";
 
-const styles = {
-  sectionHeadText: "text-5xl md:text-6xl font-black text-center"
-};
 
 
 const Experience = () => {
@@ -16,12 +14,7 @@ const Experience = () => {
     <section className="relative w-full min-h-screen bg-black flex flex-col items-center px-6 py-16 overflow-hidden">
       <StarBackground />
       
-      <div className="absolute top-20 left-10">
-        <FloatingOrb delay={0} />
-      </div>
-      <div className="absolute bottom-40 right-20">
-        <FloatingOrb delay={2} />
-      </div>
+      
 
       <div
         className="relative "
@@ -29,7 +22,7 @@ const Experience = () => {
           animation: 'fadeInDown 1s ease-out',
         }}
       >
-        <h2 className={`${styles.sectionHeadText} font-semibold mb-4 text-[#915eff]`}>
+        <h2 className={`${styles.sectionHeadText} font-semibold  text-[#915eff]`}>
           Experience
         </h2>
         <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#915eff] to-transparent mx-auto mb-16" />
