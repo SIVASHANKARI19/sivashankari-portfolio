@@ -1,6 +1,6 @@
 
-import BallCanvas from "./Ball";
-import ComputersCanvas from "./Computers";
-import StarsCanvas from "./Stars";
 
-export {  BallCanvas, ComputersCanvas, StarsCanvas };
+import ComputersCanvas from "./Computers";
+import {FloatingSphere,BackgroundCanvas} from "./FloatingSphere";
+
+export {   ComputersCanvas,FloatingSphere,BackgroundCanvas };

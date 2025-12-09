@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import  { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { styles } from "../style";
-import { FloatingSphere,BackgroundCanvas } from "./canvas/FloatingSphere";
+import { BackgroundCanvas } from "./canvas/FloatingSphere";
 import {AnimatedInput} from "../utils/function";
 
 const Contact = () => {
@@ -44,8 +44,8 @@ const Contact = () => {
     // EmailJS configuration - Replace with your credentials
     emailjs
       .send(
-        "YOUR_SERVICE_ID",
-        "YOUR_TEMPLATE_ID",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
           from_name: form.name,
           to_name: "Your Name",
@@ -53,7 +53,7 @@ const Contact = () => {
           to_email: "sivashankari19115@gmail.com",
           message: form.message,
         },
-        "YOUR_PUBLIC_KEY"
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(
         () => {
@@ -119,9 +119,8 @@ const Contact = () => {
         >
           <div className="space-y-4">
             {[
-              { icon: "📧", label: "Email", value: "your-email@example.com" },
-              { icon: "📱", label: "Phone", value: "+1 (555) 123-4567" },
-              { icon: "📍", label: "Location", value: "Chennai, Tamil Nadu, IN" },
+              { icon: "📧", label: "Email", value: "sivashankari19115@gmail.com" },
+              { icon: "📍", label: "Location", value: "Erode, Tamil Nadu, IN" },
             ].map((item, index) => (
               <motion.div
                 key={item.label}

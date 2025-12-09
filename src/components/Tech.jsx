@@ -5,7 +5,6 @@ import { technologies } from "../constants";
 import { TechCard} from "../utils/function";
 
 
-// Main Tech Component
 const Tech = () => {
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black flex flex-col items-center justify-center px-6 py-20 overflow-hidden">

@@ -2,9 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Star, Code, Rocket, Work } from "@mui/icons-material";
 import { experienceTimeline } from "../constants";
 import { StarBackground, FloatingOrb } from "../components/StarBackground.jsx";
-import {styles} from "../style";
-
-
+import { styles } from "../style";
 
 const Experience = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -13,26 +11,28 @@ const Experience = () => {
   return (
     <section className="relative w-full min-h-screen bg-black flex flex-col items-center px-6 py-16 overflow-hidden">
       <StarBackground />
-      
-      
-
       <div
         className="relative "
         style={{
-          animation: 'fadeInDown 1s ease-out',
+          animation: "fadeInDown 1s ease-out",
         }}
       >
-        <h2 className={`${styles.sectionHeadText} font-semibold  text-[#915eff]`}>
+        <h2
+          className={`${styles.sectionHeadText} font-semibold  text-[#915eff]`}
+        >
           Experience
         </h2>
         <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#915eff] to-transparent mx-auto mb-16" />
       </div>
 
-      <div ref={containerRef} className="flex flex-col gap-20 max-w-5xl w-full relative ">
+      <div
+        ref={containerRef}
+        className="flex flex-col gap-20 max-w-5xl w-full relative "
+      >
         {experienceTimeline.map((item, index) => {
           const Icon = item.icon;
           const isHovered = hoveredIndex === index;
-          
+
           return (
             <div
               key={index}
@@ -46,11 +46,11 @@ const Experience = () => {
               {/* Connecting Line with Glow */}
               {index !== experienceTimeline.length - 1 && (
                 <div className="absolute left-1/2 top-full w-0.5 h-20 -translate-x-1/2 mt-4">
-                  <div 
+                  <div
                     className="w-full h-full bg-gradient-to-b from-[#915eff] to-transparent"
                     style={{
-                      boxShadow: isHovered ? '0 0 20px #915eff' : 'none',
-                      transition: 'box-shadow 0.3s ease',
+                      boxShadow: isHovered ? "0 0 20px #915eff" : "none",
+                      transition: "box-shadow 0.3s ease",
                     }}
                   />
                 </div>
@@ -62,32 +62,36 @@ const Experience = () => {
                     className="absolute inset-0 rounded-full bg-[#915eff] blur-xl"
                     style={{
                       opacity: isHovered ? 0.6 : 0.3,
-                      transform: isHovered ? 'scale(1.3)' : 'scale(1)',
-                      transition: 'all 0.4s ease',
+                      transform: isHovered ? "scale(1.3)" : "scale(1)",
+                      transition: "all 0.4s ease",
                     }}
                   />
                   <div
                     className="relative w-20 h-20 rounded-full bg-gradient-to-br from-[#915eff] to-[#6d28d9] flex items-center justify-center"
                     style={{
-                      transform: isHovered ? 'rotate(360deg) scale(1.1)' : 'rotate(0deg) scale(1)',
-                      transition: 'transform 0.6s ease',
-                      boxShadow: isHovered ? '0 0 40px rgba(145, 94, 255, 0.8)' : '0 0 20px rgba(145, 94, 255, 0.4)',
+                      transform: isHovered
+                        ? "rotate(360deg) scale(1.1)"
+                        : "rotate(0deg) scale(1)",
+                      transition: "transform 0.6s ease",
+                      boxShadow: isHovered
+                        ? "0 0 40px rgba(145, 94, 255, 0.8)"
+                        : "0 0 20px rgba(145, 94, 255, 0.4)",
                     }}
                   >
                     <Icon className="w-10 h-10 text-white" />
                   </div>
-                                    {isHovered && (
+                  {isHovered && (
                     <>
                       {[0, 120, 240].map((angle) => (
                         <div
                           key={angle}
                           className="absolute w-2 h-2 bg-[#915eff] rounded-full"
                           style={{
-                            top: '50%',
-                            left: '50%',
+                            top: "50%",
+                            left: "50%",
                             animation: `orbit 2s linear infinite`,
                             animationDelay: `${angle / 120}s`,
-                            transformOrigin: '0 0',
+                            transformOrigin: "0 0",
                           }}
                         />
                       ))}
@@ -97,35 +101,42 @@ const Experience = () => {
                 <div
                   className="flex-1 bg-gradient-to-br from-[#1e1e1e] to-[#0a0a0a] rounded-2xl p-8 relative overflow-hidden"
                   style={{
-                    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-                    boxShadow: isHovered 
-                      ? '0 20px 60px rgba(145, 94, 255, 0.4), 0 0 40px rgba(145, 94, 255, 0.2) inset'
-                      : '0 10px 30px rgba(0, 0, 0, 0.5)',
-                    transition: 'all 0.4s ease',
-                    border: isHovered ? '1px solid rgba(145, 94, 255, 0.5)' : '1px solid transparent',
+                    transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+                    boxShadow: isHovered
+                      ? "0 20px 60px rgba(145, 94, 255, 0.4), 0 0 40px rgba(145, 94, 255, 0.2) inset"
+                      : "0 10px 30px rgba(0, 0, 0, 0.5)",
+                    transition: "all 0.4s ease",
+                    border: isHovered
+                      ? "1px solid rgba(145, 94, 255, 0.5)"
+                      : "1px solid transparent",
                   }}
                 >
-                                    <div
+                  <div
                     className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500"
                     style={{
-                      background: 'radial-gradient(circle at center, rgba(145, 94, 255, 0.1) 0%, transparent 70%)',
-                      pointerEvents: 'none',
+                      background:
+                        "radial-gradient(circle at center, rgba(145, 94, 255, 0.1) 0%, transparent 70%)",
+                      pointerEvents: "none",
                     }}
                   />
                   <div className="relative ">
                     <div
                       style={{
-                        transform: isHovered ? 'translateX(10px)' : 'translateX(0)',
-                        transition: 'transform 0.3s ease',
+                        transform: isHovered
+                          ? "translateX(10px)"
+                          : "translateX(0)",
+                        transition: "transform 0.3s ease",
                       }}
                     >
                       <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
                         {item.title}
-                        <Star 
+                        <Star
                           className="w-5 h-5 text-[#915eff]"
                           style={{
-                            transform: isHovered ? 'rotate(144deg) scale(1.3)' : 'rotate(0deg) scale(1)',
-                            transition: 'transform 0.5s ease',
+                            transform: isHovered
+                              ? "rotate(144deg) scale(1.3)"
+                              : "rotate(0deg) scale(1)",
+                            transition: "transform 0.5s ease",
                           }}
                         />
                       </h3>
@@ -141,7 +152,9 @@ const Experience = () => {
                           key={i}
                           className="text-gray-300 flex items-start gap-3 group"
                           style={{
-                            animation: isHovered ? `slideInRight 0.3s ease-out ${i * 0.1}s both` : 'none',
+                            animation: isHovered
+                              ? `slideInRight 0.3s ease-out ${i * 0.1}s both`
+                              : "none",
                           }}
                         >
                           <span className="w-1.5 h-1.5 bg-[#915eff] rounded-full mt-2 group-hover:scale-150 transition-transform" />
@@ -155,7 +168,9 @@ const Experience = () => {
                           key={i}
                           className="group relative px-4 py-2 bg-[#915eff]/10 rounded-lg border border-[#915eff]/30 hover:bg-[#915eff]/20 hover:border-[#915eff]/60 transition-all duration-300 cursor-pointer"
                           style={{
-                            animation: isHovered ? `scaleIn 0.3s ease-out ${i * 0.1}s both` : 'none',
+                            animation: isHovered
+                              ? `scaleIn 0.3s ease-out ${i * 0.1}s both`
+                              : "none",
                           }}
                         >
                           <div className="absolute inset-0 bg-[#915eff]/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity" />

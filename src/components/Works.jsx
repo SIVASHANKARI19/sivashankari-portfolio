@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { StarBackground } from "../components/StarBackground.jsx";
 import { projects } from "../constants";
-import {handleScroll,scroll} from '../utils/function';
 
 const styles = {
   sectionHeadText: "text-5xl md:text-6xl font-black",
@@ -13,6 +12,27 @@ const Works = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
   const scrollContainerRef = useRef(null);
+   const handleScroll = () => {
+      const container = scrollContainerRef.current;
+      if (container) {
+        setShowLeftArrow(container.scrollLeft > 0);
+        setShowRightArrow(
+          container.scrollLeft <
+            container.scrollWidth - container.clientWidth - 10
+        );
+      }
+    };
+  
+    const scroll = (direction) => {
+      const container = scrollContainerRef.current;
+      if (container) {
+        const scrollAmount = 420; 
+        container.scrollBy({
+          left: direction === "left" ? -scrollAmount : scrollAmount,
+          behavior: "smooth",
+        });
+      }
+    };
 
   return (
     <div className="relative w-full min-h-screen bg-black overflow-hidden flex items-center justify-center px-6 py-16">

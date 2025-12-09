@@ -230,27 +230,8 @@ export const TechCard = ({ technology, index }) => {
   );
 };
 
-export const handleScroll = () => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      setShowLeftArrow(container.scrollLeft > 0);
-      setShowRightArrow(
-        container.scrollLeft <
-          container.scrollWidth - container.clientWidth - 10
-      );
-    }
-  };
 
- export const scroll = (direction) => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      const scrollAmount = 420; 
-      container.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
+
 
   export const AnimatedInput = ({ label, type, name, value, onChange, required, isTextarea = false }) => {
     const [isFocused, setIsFocused] = useState(false);

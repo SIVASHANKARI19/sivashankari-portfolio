@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { aboutContent } from "../constants";
 import { StarBackground } from "../components/StarBackground.jsx";
 
@@ -32,7 +32,7 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Profile Image Section */}
+          {/* Profile Image  */}
           <div
             className="flex justify-center relative"
             onMouseEnter={() => setIsHovered(true)}
@@ -71,7 +71,7 @@ const About = () => {
                 }}
               />
 
-              {/* Orbiting particles - position them at center and let orbit keyframe handle rotation */}
+              {/* Orbiting particles  */}
               {isHovered &&
                 [0, 72, 144, 216, 288].map((angle, i) => (
                   <div
@@ -81,14 +81,13 @@ const About = () => {
                       top: "50%",
                       left: "50%",
                       transformOrigin: "0 0",
-                      // each particle uses same animation but different delays for a spread
                       animation: `orbit 3.6s linear infinite ${i * 0.12}s`,
                       boxShadow: "0 0 10px #915eff",
                     }}
                   />
                 ))}
 
-              {/* Profile Image (the interactive element) */}
+              {/* Profile Image */}
               <div
                 className="relative w-72 h-72 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl"
                 style={{
@@ -104,8 +103,6 @@ const About = () => {
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
-
-                {/* subtle overlay gradient */}
                 <div
                   className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
                   style={{
@@ -117,7 +114,6 @@ const About = () => {
             </div>
           </div>
 
-          {/* Text Content Section */}
           <div className="text-white flex flex-col justify-center space-y-6" style={{ animation: "slideInRight 0.9s ease-out both" }}>
             <div className="space-y-4">
               {aboutContent.description.map((text, i) => (
@@ -127,7 +123,7 @@ const About = () => {
               ))}
             </div>
 
-            {/* Stats/Highlights */}
+            {/* Stats */}
             <div className="grid grid-cols-3 gap-4 mt-8">
               {aboutContent.stats.map((stat, i) => (
                 <div
