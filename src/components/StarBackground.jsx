@@ -1,6 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 
+// Utility to detect mobile
+const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) || window.innerWidth < 768;
+};
+
 export const StarBackground = () => {
   const canvasRef = useRef(null);
   const animationIdRef = useRef(null);
@@ -14,6 +21,7 @@ export const StarBackground = () => {
     // Prevent multiple renderers
     if (rendererRef.current) return;
 
+    const isMobile = isMobileDevice();
     let starGeometry, starMaterial, stars;
 
     const scene = new THREE.Scene();
@@ -27,29 +35,34 @@ export const StarBackground = () => {
     );
     camera.position.z = 10;
 
-    const renderer = new THREE.WebGLRenderer({ 
-      canvas, 
-      alpha: true, 
-      antialias: true 
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: !isMobile, // Disable antialiasing on mobile
+      powerPreference: isMobile ? "low-power" : "high-performance"
     });
     rendererRef.current = renderer;
-    
+
     renderer.setClearColor(0x000000, 0);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Lower pixel ratio on mobile (1 vs 2)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
 
     // Stars
     starGeometry = new THREE.BufferGeometry();
-    const starCount = 1000;
+    // Reduce star count on mobile (500 vs 1000)
+    const starCount = isMobile ? 500 : 1000;
     const positions = new Float32Array(starCount * 3);
+
     for (let i = 0; i < starCount * 3; i++) {
       positions[i] = (Math.random() - 0.5) * 30;
     }
+
     starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
     starMaterial = new THREE.PointsMaterial({
       color: 0x915eff,
-      size: 0.05,
+      size: isMobile ? 0.07 : 0.05, // Slightly larger on mobile for visibility
       transparent: true,
       opacity: 0.9,
     });
@@ -63,39 +76,37 @@ export const StarBackground = () => {
       stars.rotation.y += 0.0003;
       renderer.render(scene, camera);
     };
+
     animate();
 
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
     };
+
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current);
       }
-      
       if (starGeometry) starGeometry.dispose();
       if (starMaterial) starMaterial.dispose();
-      
       if (rendererRef.current) {
         rendererRef.current.dispose();
         rendererRef.current.forceContextLoss();
         rendererRef.current = null;
       }
-      
       sceneRef.current = null;
     };
   }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
+    <canvas
+      ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full pointer-events-none"
       style={{ zIndex: 1 }}
     />
