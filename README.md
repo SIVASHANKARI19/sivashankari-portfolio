@@ -15,21 +15,6 @@ Modern single-page portfolio with animated Three.js starfield background and smo
 - 🎨 **Tailwind Styling** - Responsive, modern UI
 - ⚡ **Optimized Performance** - Lightweight rendering with requestAnimationFrame
 
-## 📂 Structure
-```
-src/
- ├── components/
- │    ├── StarBackground.jsx   # Three.js animated stars
- │    ├── Navbar.jsx
- │    ├── Hero.jsx
- │    ├── About.jsx
- │    ├── Experience.jsx
- │    ├── Tech.jsx
- │    ├── Works.jsx
- │    └── Contact.jsx
- ├── App.jsx
- └── main.jsx
-```
 
 ## 🚀 Quick Start
 ```bash
