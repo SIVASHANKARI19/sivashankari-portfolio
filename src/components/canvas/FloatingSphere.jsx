@@ -1,22 +1,12 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
-
-// Utility to detect mobile
-const isMobileDevice = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  ) || window.innerWidth < 768;
-};
+import { useIsMobile } from "../../utils/useIsMobile";
 
 export const FloatingSphere = ({ mousePosition }) => {
   const sphereRef = useRef();
   const particlesRef = useRef();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(isMobileDevice());
-  }, []);
+  const isMobile = useIsMobile();
 
   useFrame((state) => {
     if (sphereRef.current) {
@@ -97,11 +87,7 @@ export const FloatingSphere = ({ mousePosition }) => {
 };
 
 export const BackgroundCanvas = ({ mousePosition }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(isMobileDevice());
-  }, []);
+  const isMobile = useIsMobile();
 
   return (
     <div className="absolute inset-0 pointer-events-none">

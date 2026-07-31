@@ -57,6 +57,9 @@ const Contact = () => {
       )
       .then(
         () => {
+          console.log(import.meta.env.VITE_EMAILJS_SERVICE_ID); 
+          console.log(import.meta.env.VITE_EMAILJS_TEMPLATE_ID);
+          console.log(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
           setLoading(false);
           setSuccess(true);
           setForm({ name: "", email: "", message: "" });
@@ -66,6 +69,9 @@ const Contact = () => {
         (error) => {
           setLoading(false);
           console.error(error);
+          console.log(import.meta.env.VITE_EMAILJS_SERVICE_ID);
+console.log(import.meta.env.VITE_EMAILJS_TEMPLATE_ID);
+console.log(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
           alert("Something went wrong. Please try again.");
         }
       );

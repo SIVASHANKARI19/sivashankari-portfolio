@@ -1,18 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
-
-// Utility to detect mobile
-const isMobileDevice = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  ) || window.innerWidth < 768;
-};
+import { useIsMobile } from "../utils/useIsMobile";
 
 export const StarBackground = () => {
   const canvasRef = useRef(null);
   const animationIdRef = useRef(null);
   const rendererRef = useRef(null);
   const sceneRef = useRef(null);
+  const isMobile = useIsMobile();
+  const isMobileRef = useRef(isMobile);
+  isMobileRef.current = isMobile;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -21,7 +18,7 @@ export const StarBackground = () => {
     // Prevent multiple renderers
     if (rendererRef.current) return;
 
-    const isMobile = isMobileDevice();
+    const isMobile = isMobileRef.current;
     let starGeometry, starMaterial, stars;
 
     const scene = new THREE.Scene();

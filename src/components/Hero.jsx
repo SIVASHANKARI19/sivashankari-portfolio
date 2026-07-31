@@ -6,7 +6,7 @@ import { section } from "framer-motion/m";
 
 const Hero = () => {
   return (
-    <section className="relative w-full h-screen mx-auto">
+    <section className="relative w-full h-screen h-[100dvh] mx-auto">
       <div
         className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start gap-5`}
       >
@@ -22,8 +22,12 @@ const Hero = () => {
             I'm a Frontend Developer <br /> and Passionate about AI & ML{" "}
           </p>
         </div>
-        <ComputersCanvas />
       </div>
+
+      {/* Direct child of <section>, which has a definite w-full/h-screen size,
+          so the Canvas's internal width:100%/height:100% resolves reliably
+          at every viewport instead of collapsing as an unsized flex item. */}
+      <ComputersCanvas />
     </section>
   );
 };
